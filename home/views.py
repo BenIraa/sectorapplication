@@ -123,3 +123,6 @@ def proussd(request):
             response ="END INvalid choice"
 
     return HttpResponse(response)
+def registration (request):
+
+    return render(request, 'register.html')
