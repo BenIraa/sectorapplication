@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import africastalking
+from .models import *
 from django.http import HttpResponse 
 from django.views.decorators.csrf import csrf_exempt
 username ="iradukundacyuzuzo50@gmail,com"
@@ -124,5 +125,19 @@ def proussd(request):
 
     return HttpResponse(response)
 def registration (request):
+    if request.method =='POST':
+        phone = request.POST['phone']
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        insert = Registration(phone=phone,firstname=firstname,lastname=firstname)
+        insert.save()
+        try:
+            insert.save()
+            return render(request, 'register.html',{'message':'data has been inserted succesful'})
+        except:
+            return render(request, 'register.html',{'message':'Failed to Insert'})
+
+        
+    
 
     return render(request, 'register.html')

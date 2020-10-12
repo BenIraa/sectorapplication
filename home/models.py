@@ -8,3 +8,10 @@ class Employees(models.Model):
     description= models.TextField()
     def __str__(self):
         return self.firstname
+class Registration(models.Model):
+    phone =models.CharField (max_length=225)
+    firstname =models.CharField (max_length=225)
+    lastname =models.CharField (max_length=225)
+    def __str__(self):
+        return self.firstname
+    

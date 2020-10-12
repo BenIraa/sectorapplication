@@ -12,10 +12,18 @@
     </head>
     <body>
         <h1>Welcome to Register</h1>
-        <form action="" method="POST">
+        <p class="alret alert-warning" >{{message}}</p>
+        <form action="{% url 'register'%}" method="POST">
+            
+            {% csrf_token %}
+            <label>Phone</label> 
             <input type="text" name="phone" class="form-control">
-            <input type="text" name="name" class="form-control">
-            <input type="text" name="phone" class="form-control">
+            <label>First name</label> 
+            <input type="text" name="irstname" class="form-control">
+            <label>Last name</label>
+            <input type="text" name="lastname" class="form-control">
+            <button type="submit" class="form-control"></button>
+        
 
 
 
