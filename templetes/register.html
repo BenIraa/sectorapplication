@@ -29,6 +29,24 @@
 
         </form>
 
+        <table class="table">
+            <tr>
+                <td>id</td>
+                <td>Phone</td>
+                <td>Firstname</td>
+                <td>lastname</td>
+            </tr>
+            {% for ida in data %}
+            <tr>
+            <td>{{ ida.ida}}</td> 
+            <td>{{ ida.phone}}</td>
+            <td>{{ ida.firstname}}</td>
+            <td>{{ ida.lastname}}</td>      
+            </tr>
+            {% endfor %}
+            
+        </table>
+
 
 
     </body>

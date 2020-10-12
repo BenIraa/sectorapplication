@@ -125,6 +125,7 @@ def proussd(request):
 
     return HttpResponse(response)
 def registration (request):
+    select =Registration.objects.all().order_by('id')
     if request.method =='POST':
         phone = request.POST['phone']
         firstname = request.POST['firstname']
@@ -133,11 +134,11 @@ def registration (request):
         insert.save()
         try:
             insert.save()
-            return render(request, 'register.html',{'message':'data has been inserted succesful'})
+            return render(request, 'register.html',{'message':'data has been inserted succesful','data':select})
         except:
-            return render(request, 'register.html',{'message':'Failed to Insert'})
+            return render(request, 'register.html',{'message':'Failed to Insert','data':select})
 
         
     
 
-    return render(request, 'register.html')
+    return render(request, 'register.html',{'data':select})
