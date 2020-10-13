@@ -11,5 +11,6 @@ urlpatterns=[
     path('registration/', views.registration, name='register'),
     path('<int:id>/deleteInfos/', views.delreg, name='deleteInfos'),
     path('<int:id>/updateInfos/', views.updatereg, name='updateInfos'),
-    path('reg/endpoints/', views.registerEndpoint, name='endpionts')
+    path('reg/endpoints/', views.registerEndpoint, name='endpionts'),
+    path('del/endpoints/<int:id>',views.deleteEndpoint,name='deleteEndpoint'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

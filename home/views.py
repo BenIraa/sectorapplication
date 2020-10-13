@@ -185,5 +185,27 @@ def registerEndpoint(request):
         serializer = RegisterSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
+            return JsonResponse({'mesage':'sent','data':serializer.data}, status=201)
         return JsonResponse(serializer.errors, status=400)
+#delete/put/get
+    
+#delete and update
+@csrf_exempt
+def deleteEndpoint(request,id):
+ 
+    if request.method == 'GET':
+        reg=Registration .objects.get(id=id)
+        serializer = RegisterSerializer(reg, many=False)
+        return JsonResponse(serializer.data, safe=False)
+    elif request.method=='DELETE':
+        delt=Registration .objects.get(id=id).delete()
+        return JsonResponse({'message':'Data has been Deleted'}, status=490)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)#or request.data
+        serializer = RegisterSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':"Sent success",'data':serializer.data}, status=201)
+        return JsonResponse(serializer.errors, status=400)
+    
