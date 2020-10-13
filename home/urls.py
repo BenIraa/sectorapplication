@@ -9,4 +9,7 @@ urlpatterns=[
     
     path('proussd/', views.proussd, name='proussd'),
     path('registration/', views.registration, name='register'),
+    path('<int:id>/deleteInfos/', views.delreg, name='deleteInfos'),
+    path('<int:id>/updateInfos/', views.updatereg, name='updateInfos'),
+    path('reg/endpoints/', views.registerEndpoint, name='endpionts')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

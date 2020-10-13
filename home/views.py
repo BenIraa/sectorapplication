@@ -1,8 +1,12 @@
-from django.shortcuts import render
 import africastalking
+from django.shortcuts import render
+from .serializers import *
 from .models import *
-from django.http import HttpResponse 
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, JsonResponse
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+
 username ="iradukundacyuzuzo50@gmail,com"
 api_key = "fadcb6a9ccf85104850af3477cc74d46eb392efb4940ff37495b8db395fa2e14"
 africastalking.initialize(username, api_key)
@@ -142,3 +146,44 @@ def registration (request):
     
 
     return render(request, 'register.html',{'data':select})
+def delreg(request,id):
+    select = Registration.objects.all().order_by('id')
+    deleteinfos = Registration.objects.get(id=id).delete()
+    return render(request, 'register.html',{'delmsg':'data has been inserted succesful','data':select})
+def updatereg(request,id):
+    select = Registration.objects.all().order_by('id')
+    update = Registration.objects.get(id=id)
+    if request.method=='POST':
+        
+        
+        update.phone = request.POST['phone']
+        update.phone = request.POST['firstname']
+        update.phone = request.POST['lastname']
+        try:
+            update.save()
+            return render(request, 'updateregister.html',{'message':'Data have been updated','data':select,'update':update})
+        except:
+            return render(request, 'updateregister.html',{'message':'Data does not  updated','data':select,'update':update})
+                        
+
+
+
+    return render(request, 'updateregister.html',{'delmsg':'data has been inserted succesful','data':select,'update':update})
+#Biulidng our End point 
+@csrf_exempt
+def registerEndpoint(request):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        reg = Registration.objects.all()
+        serializer = RegisterSerializer(reg, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request) #request.data
+        serializer = RegisterSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
