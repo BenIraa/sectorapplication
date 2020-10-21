@@ -6,6 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+#login
+from django.shortcuts import get_object_or_404
+from my_project.example.models import Profile
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.views import APIView
 
 username ="iradukundacyuzuzo50@gmail,com"
 api_key = "fadcb6a9ccf85104850af3477cc74d46eb392efb4940ff37495b8db395fa2e14"
@@ -208,4 +213,5 @@ def deleteEndpoint(request,id):
             serializer.save()
             return JsonResponse({'message':"Sent success",'data':serializer.data}, status=201)
         return JsonResponse(serializer.errors, status=400)
+
     
