@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Employees(models.Model):
@@ -14,4 +15,9 @@ class Registration(models.Model):
     lastname =models.CharField (max_length=225)
     def __str__(self):
         return self.firstname
-    
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255)
+    country =models.CharField(max_length=255)
+    accounttype =models.CharField(max_length=255)    
