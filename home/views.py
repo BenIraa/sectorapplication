@@ -5,7 +5,12 @@ from .models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser,MultiPartParser,FormParser
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated, AllowAny
 #login
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -13,6 +18,8 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 username ="iradukundacyuzuzo50@gmail,com"
 api_key = "fadcb6a9ccf85104850af3477cc74d46eb392efb4940ff37495b8db395fa2e14"
@@ -231,4 +238,34 @@ def deleteEndpoint(request,id):
             return JsonResponse({'message':"Sent success",'data':serializer.data}, status=201)
         return JsonResponse(serializer.errors, status=400)
 
-    
+# creating endpoint
+class Posts(APIView):
+    permission_classes = (permissions.AllowAny, )
+    parser_classes =(MultiPartParser, FormParser)
+    # creating post method
+    def post(self,request, *args, **kwargs):
+        serializers= PostsSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return JsonResponse({'message':'successfull','data':serializers.data},status=201)
+        else:
+            return JsonResponse({'message':'byanze','data':serializers.error}, status=400)
+
+@csrf_exempt
+def Sendemail(request):
+   
+    if request.method == 'GET':
+        reg = Sendemail.objects.all()
+        serializer = SendemailSerializer(reg, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+
+ #request.data
+        serializer = SendemailSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':'successful'}, status=201)
+        return JsonResponse(serializer.errors, status=400)  
+  

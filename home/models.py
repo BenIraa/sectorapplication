@@ -20,4 +20,29 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=255)
     country =models.CharField(max_length=255)
-    accounttype =models.CharField(max_length=255)    
+    accounttype =models.CharField(max_length=255)  
+class Posts(models.Model):
+    title = models.CharField(max_length=255)
+    category = models.CharField(max_length=255) 
+    pictures = models.FileField()
+    description = models.CharField(max_length=255)
+    def __str__(self):
+        return self.title
+
+class Signup(models.Model):
+    fullname = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    def __str__(self):
+        return self.fullname
+
+class Sendemail(models.Model):
+    email= models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255)
+    description = models.TextField()
+    def __str__(self):
+        return self.email
+

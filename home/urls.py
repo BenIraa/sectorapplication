@@ -14,5 +14,10 @@ urlpatterns=[
     path('<int:id>/updateInfos/', views.updatereg, name='updateInfos'),
     path('reg/endpoints/', views.registerEndpoint, name='endpionts'),
     path('del/endpoints/<int:id>',views.deleteEndpoint,name='deleteEndpoint'),
-    path('user-creation/', CustomAuthToken.as_view())
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('user-creation/', CustomAuthToken.as_view()),
+    path('post-endpoint/', Posts.as_view()),
+    path('send-email/', views.Sendemail, name='sendemail'),
+    
+    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
